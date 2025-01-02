@@ -1,0 +1,30 @@
+#include "bullet.h"
+#include "gamestate.h"
+
+Bullet::Bullet(float x, float y, float angle, float velocity)
+    : Box(x, y, 0.1f, 0.1f)  // ??????? ??? ??????????? ??? Box constructor
+{
+    // ??????????? ??? ????????? ??? ?? bullet
+    m_velocity_x = cos(angle) * velocity;
+    m_velocity_y = sin(angle) * velocity;
+
+    m_brush_bullet.outline_opacity = 0.0f;
+    m_brush_bullet.texture = m_state->getFullAssetPath("bullet.png");
+}
+
+void Bullet::update(float dt)
+{
+    m_pos_x += m_velocity_x * dt;
+    m_pos_y += m_velocity_y * dt;
+
+    if (m_pos_x < 0 || m_pos_x > m_state->getCanvasWidth() || m_pos_y < 0 || m_pos_y > m_state->getCanvasHeight()) {
+        setActive(false);  // ?? ?? bullet ???? ??? ??? ?????, ?? ?? ?????????????????
+    }
+
+    GameObject::update(dt);
+}
+
+void Bullet::draw()
+{
+    graphics::drawRect(m_pos_x, m_pos_y, m_width, m_height, m_brush_bullet);
+}
