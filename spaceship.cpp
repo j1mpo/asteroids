@@ -1,36 +1,40 @@
 #include "Spaceship.h"
+#include <sgg/graphics.h>
 
 Spaceship::Spaceship(float x, float y, const std::string& texture)
-    : m_pos_x(x), m_pos_y(y), m_texture(texture) {
-    m_brush.texture = texture;  // ???????? ??? ??? (texture) ??? ?? brush
+    : m_box(x, y, 50, 50), m_texture(texture) {
+    m_brush.texture = m_texture;
 }
 
 void Spaceship::update(float dt) {
-    // ????????? ??? bullets
-    for (auto& bullet : m_bullets) {
-        bullet.update(dt);
-    }
+    // Handle movement
 }
 
 void Spaceship::draw() {
-    // ???????? ??? ??????????????
-    graphics::drawRect(m_pos_x, m_pos_y, 64, 64, m_brush);  // ??????????? ?? ?????????????
-
-    // ???????? ??? bullets
-    for (auto& bullet : m_bullets) {
-        bullet.draw();
-    }
+    graphics::drawRect(m_box.m_pos_x, m_box.m_pos_y, m_box.m_width, m_box.m_height, m_brush);
 }
 
-void Spaceship::shoot() {
-    Bullet new_bullet(m_pos_x, m_pos_y - 25.0f, 5.0f, 10.0f, "bullet.png", 0.0f, 10.0f);
-    m_bullets.push_back(new_bullet);
+void Spaceship::shoot(std::vector<Bullet>& bullets) {
+    Bullet newBullet(m_box.m_pos_x, m_box.m_pos_y, 10, 20, "bullet.png");
+    bullets.push_back(newBullet);
 }
 
 void Spaceship::moveLeft(float dt) {
-    m_pos_x -= 5.0f * dt;
+    m_box.m_pos_x -= m_box.velocity * dt;
 }
 
 void Spaceship::moveRight(float dt) {
-    m_pos_x += 5.0f * dt;
+    m_box.m_pos_x += m_box.velocity * dt;
+}
+
+void Spaceship::moveUp(float dt) {
+    m_box.m_pos_y -= m_box.velocity * dt;
+}
+
+void Spaceship::moveDown(float dt) {
+    m_box.m_pos_y += m_box.velocity * dt;
+}
+
+bool Spaceship::checkCollision(const Box& otherBox) {
+    return m_box.intersect(otherBox);
 }
