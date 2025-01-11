@@ -1,18 +1,34 @@
-// GameState.cpp
-
 #include "gamestate.h"
-#include "level.h"
 #include "player.h"
 
-void GameState::init()
-{
-    // ??? ??????? ?? GameState ??? ?? ????????? ??? ????? ??? ???? Player
-    m_current_level = new Level("Level0");
-    m_current_level->init();
+GameState* GameState::m_unique_instance = nullptr;
 
-    m_player = new Player(this, "Player"); // ??????? ??? GameState ??? Player
+GameState::GameState() {
+    // Αρχικοποίηση του game state
+}
+
+void GameState::init() {
+    m_player = new Player();
     m_player->init();
+}
 
-    graphics::preloadBitmaps(getAssetDir());
-    graphics::setFont(m_asset_path + "font.ttf");
+void GameState::draw() {
+    // Σχεδίαση του παιχνιδιού
+    m_player->draw();
+}
+
+void GameState::update(float dt) {
+    // Ενημέρωση του παιχνιδιού
+    m_player->update(dt);
+}
+
+GameState* GameState::getInstance() {
+    if (!m_unique_instance) {
+        m_unique_instance = new GameState();
+    }
+    return m_unique_instance;
+}
+
+GameState::~GameState() {
+    delete m_player;
 }
