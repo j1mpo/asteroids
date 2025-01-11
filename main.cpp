@@ -1,36 +1,26 @@
-// main.cpp
-
 #include "gamestate.h"
-#include "player.h"
-#include "level.h"
+#include "spaceship.h"
 #include <sgg/graphics.h>
 
-void init()
-{
-    GameState::getInstance()->init();  // ?????????? ??? GameState
+void init() {
+    GameState::getInstance()->init();  // Initialize the game state
 }
 
-void draw()
-{
-    GameState::getInstance()->draw();
+void draw() {
+    GameState::getInstance()->draw();  // Draw game objects
 }
 
-void update(float dt)
-{
-    GameState::getInstance()->update(dt);
+void update(float dt) {
+    GameState::getInstance()->update(dt);  // Update the game objects
 }
 
-int main(int argc, char** argv)
-{
-    graphics::createWindow(800, 800, "Asteroid Game");
+int main(int argc, char** argv) {
+    graphics::createWindow(800, 600, "Spaceship Game");
 
     init();
 
     graphics::setDrawFunction(draw);
     graphics::setUpdateFunction(update);
-
-    graphics::setCanvasSize(GameState::getInstance()->getCanvasWidth(), GameState::getInstance()->getCanvasHeight());
-    graphics::setCanvasScaleMode(graphics::CANVAS_SCALE_FIT);
 
     graphics::startMessageLoop();
 
