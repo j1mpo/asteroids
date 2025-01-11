@@ -1,16 +1,19 @@
 #pragma once
-#include "gameobject.h"
 #include "box.h"
 #include <sgg/graphics.h>
 
-class Bullet : public GameObject, public Box
-{
-    graphics::Brush m_brush_bullet;
-    float m_velocity_x, m_velocity_y;
-
+class Bullet {
 public:
-    // ?????????? ?????? ???????? ??? ????????????
-    Bullet(float x, float y, float angle, float velocity);
-    void update(float dt) override;
-    void draw() override;
+    Bullet(float x, float y, float width, float height, const std::string& texture)
+        : m_box(x, y, width, height) {
+    }
+
+    void update(float dt);
+    void draw();
+    bool checkCollision(Box& otherBox);
+    void destroy();
+
+private:
+    Box m_box;
+    graphics::Brush m_brush;
 };
