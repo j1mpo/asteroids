@@ -1,8 +1,9 @@
 #pragma once
-#include <string>
-#include <sgg/graphics.h>
 #include <vector>
-#include "bullet.h"
+#include <string>
+#include "Box.h"
+#include "Bullet.h"
+#include <sgg/graphics.h>
 
 class Spaceship {
 public:
@@ -10,16 +11,15 @@ public:
 
     void update(float dt);
     void draw();
-    void shoot();
+    void shoot(std::vector<Bullet>& bullets);
     void moveLeft(float dt);
     void moveRight(float dt);
-
-    graphics::Brush getBrush() const { return m_brush; }  // ???????? ??? ?????????? getBrush
+    void moveUp(float dt);
+    void moveDown(float dt);
+    bool checkCollision(const Box& otherBox);
 
 private:
-    float m_pos_x, m_pos_y;
+    Box m_box;
     std::string m_texture;
-    graphics::Brush m_brush;  // Brush ??? ?? ?????????????
-    std::vector<Bullet> m_bullets;
+    graphics::Brush m_brush;
 };
-;
