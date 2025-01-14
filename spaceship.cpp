@@ -1,4 +1,4 @@
-#include "Spaceship.h"
+#include "spaceship.h"
 #include <sgg/graphics.h>
 
 Spaceship::Spaceship(float x, float y, const std::string& texture)
@@ -15,7 +15,7 @@ void Spaceship::draw() {
 }
 
 void Spaceship::shoot(std::vector<Bullet>& bullets) {
-    Bullet newBullet(m_box.m_pos_x, m_box.m_pos_y, 10, 20, "bullet.png");
+    Bullet newBullet(m_box.m_pos_x, m_box.m_pos_y, 10, 20, "bullets.png");
     bullets.push_back(newBullet);
 }
 
