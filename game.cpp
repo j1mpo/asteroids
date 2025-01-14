@@ -1,3 +1,4 @@
+
 #include <sgg/graphics.h>
 #include "config.h"
 #include "game.h"
@@ -70,7 +71,7 @@ void Game::spawnMeteorite()
 
 void Game::init()
 {
-	graphics::setFont(std::string(ASSET_PATH) + "font.ttf");
+	graphics::setFont(std::string(ASSET_PATH) + "font");
 	graphics::playMusic(std::string(ASSET_PATH) + "s.mp3", 0.5f, true, 4000);
 
 
