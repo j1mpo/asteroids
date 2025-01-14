@@ -12,28 +12,4 @@
 #define WINDOW_HEIGHT 600
 #define GAME_DEBUG 
 
-    if (!m_current_level)
-        return;
-
-    m_current_level->update(dt);
-}
-
-GameState* GameState::getInstance() {
-    if (m_unique_instance == nullptr) {
-        m_unique_instance = new GameState();
-    }
-    return m_unique_instance;
-}
-
-GameState::~GameState() {
-    if (m_player)
-        delete m_player;
-}
-
-std::string GameState::getAssetDir() {
-    return m_asset_path;
-}
-
-std::string GameState::getFullAssetPath(const std::string& asset) {
-    return m_asset_path + asset;
-}
+  
