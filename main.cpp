@@ -1,27 +1,40 @@
-#include "gamestate.h"
-#include "spaceship.h"
+#include "game.h"
+#include "Enemy.h"
 #include <sgg/graphics.h>
+#include "config.h"
 
-void init() {
-    GameState::getInstance()->init();  // Initialize the game state
+
+
+void resize(int w, int h)
+{
+    Game* game = reinterpret_cast<Game*>(graphics::getUserData());
+    game->setWindowDimensions((unsigned int)w, (unsigned)h);
 }
 
 void draw() {
-    GameState::getInstance()->draw();  // Draw game objects
+    Game* game = reinterpret_cast<Game *>(graphics::getUserData());
+    game->draw();
 }
 
-void update(float dt) {
-    GameState::getInstance()->update(dt);  // Update the game objects
+void update(float ms) {
+    Game* game = reinterpret_cast<Game*>(graphics::getUserData());
+    game->update();
 }
 
-int main(int argc, char** argv) {
-    graphics::createWindow(800, 600, "Spaceship Game");
+int main() {
 
-    init();
+    Game mygame;
 
+    graphics::createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Spaceship Game");
+    graphics::setUserData(&mygame);
     graphics::setDrawFunction(draw);
     graphics::setUpdateFunction(update);
+    graphics::setCanvasSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+    graphics::setCanvasScaleMode(graphics::CANVAS_SCALE_FIT);
 
+
+    mygame.init();
+    mygame.setDebugModel(true);
     graphics::startMessageLoop();
 
     return 0;
