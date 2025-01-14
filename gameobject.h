@@ -8,12 +8,15 @@ protected:
     float m_pos_x, m_pos_y;
     GameState* m_state;
     std::string m_name;
+    bool m_active = true;
 
 public:
-    GameObject(GameState* state, const std::string& name);  // Δήλωση χωρίς σώμα
+    GameObject(const std::string& name = "");  // Δήλωση χωρίς σώμα
     virtual void update(float dt) = 0;
-    virtual void init() = 0;
-    virtual void draw() = 0;
+    virtual void init() {}
+    virtual void draw() {}
+    bool isActive() { return m_active; }
+    void setActive(bool a) { m_active = a; }
 
     virtual ~GameObject() {}
 };
