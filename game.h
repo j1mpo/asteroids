@@ -1,68 +1,35 @@
 #pragma once
+//#include <string>
+#include "util.h"
 
-#include "player.h"
-#include "Enemy.h"
-
-class Game
+class Collidable
 {
-//void spawnMeteorite();
-
-	typedef enum { STATUS_START, STATUS_PLAYING } status_t;
-	Player* player = nullptr;
-	bool player_initialized = false;
-	bool debug_mode = false;
-	Enemy* meteorite = nullptr;
-	void spawnMeteorite();
-	void checkMeterorite();
-	bool checkCollision();
-	status_t status = STATUS_START;
-
-	unsigned int window_width = WINDOW_WIDTH,
-				window_height = WINDOW_HEIGHT;
-
-
-
-
-	void updateStartScreen();
-	void updateLevelScreen();
-	void drawStartScreen();
-	void drawLevelScreen();
-
-	
-	//bool Game::checkCollision()
-	//{
-
-		//return false;
-	//}
-
-	//void Game::update()
-	//{
-
-		//if (!player_initialized && graphics::getGlobalTime() > 1000)
-		//{
-		//	player = new Player(*this);
-	//		player_initialized = true;
-
-		//}
-
-	//}
-
 public:
-	void setDebugModel(bool d) { debug_mode = d; }
-	bool getDebugModel() const { return debug_mode; }
-	void update();
-	void draw();
-	void init();
-	unsigned int getWindowWidth() { return window_width; }
-	unsigned int getWindowHeight() { return window_height; }
-	float window2canvasX(float x);
-	float window2canvasY(float y);
-	void setWindowDimensions(unsigned int w, unsigned int h) { window_width = w; window_height = h; }
-
-	Game();
-	~Game();
-
-
-
+    virtual Disk getCollisionHull() const = 0;
+    
 
 };
+
+class GameObject {
+
+protected:
+    const class Game& game;
+
+//protected:
+   // float m_pos_x, m_pos_y;
+   // GameState* m_state;
+   // std::string m_name;
+   // bool m_active = true;
+
+public:
+
+    GameObject(const class Game & mygame); //std::string& name = "");  // ?????? ????? ????
+    virtual void update() = 0;
+    virtual void init() = 0;
+    virtual void draw() = 0;
+    //bool isActive() { return m_active; }
+    //void setActive(bool a) { m_active = a; }
+
+   // virtual ~GameObject() {}
+};
+
