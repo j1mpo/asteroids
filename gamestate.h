@@ -6,10 +6,12 @@ class GameState {
 private:
     std::string m_asset_path = "assets\\";
 
-    float m_canvas_width = 6.0f;
-    float m_canvas_height = 6.0f;
+    float m_canvas_width = 40.0f;
+    float m_canvas_height = 40.0f;
 
     static GameState* m_unique_instance;
+
+    class Level* m_current_level = 0;
     class Player* m_player = nullptr;
 
 public:
@@ -29,10 +31,8 @@ public:
     float getCanvasWidth() { return m_canvas_width; }
     float getCanvasHeight() { return m_canvas_height; }
 
-    std::string getAssetDir() { return m_asset_path; }
-    std::string getFullAssetPath(const std::string& asset) {
-        return m_asset_path + asset;
-    }
+    std::string getAssetDir();
+    std::string getFullAssetPath(const std::string& asset);
 
     class Player* getPlayer() { return m_player; }
 };
