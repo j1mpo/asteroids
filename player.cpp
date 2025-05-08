@@ -8,103 +8,55 @@ Player::Player(const Game& mygame)
 }
 
 
-
+void Player::gainLife(float amount)
+{
+    life += amount;
+    if (life > 1.0f)
+    {
+        life = 1.0f; //  maximum (1.0)
+    }
+}
 
 void Player::update() {
-   // float delta_time = dt / 1000.0f;
+
 
     if (graphics::getKeyState(graphics::SCANCODE_A))
     {
-        pos_x -= speed * graphics::getDeltaTime() / 10.0f;
+        pos_x -= speed * graphics::getDeltaTime() / 7.5f; //kinhsh aristera
     }
     if (graphics::getKeyState(graphics::SCANCODE_D))
     {
-        pos_x += speed * graphics::getDeltaTime() / 10.0f;
-    }if (graphics::getKeyState(graphics::SCANCODE_W))
-    {
-        pos_y -= speed * graphics::getDeltaTime() / 10.0f;
-    }if (graphics::getKeyState(graphics::SCANCODE_S))
-    {
-        pos_y += speed * graphics::getDeltaTime() / 10.0f;
+        pos_x += speed * graphics::getDeltaTime() / 7.5f; // kinhsh dejia
     }
-    if (graphics::getKeyState(graphics::SCANCODE_DOWN))
+    if (pos_x < 0)
     {
-    
-    height -= 0.01f * graphics::getDeltaTime();
-    if (height < 0.1f)
-        height = 0.1f;
+        pos_x = CANVAS_WIDTH; // Αν βγει αριστερά, μετακινείται στην δεξιά πλευρά
     }
-    if (graphics::getKeyState(graphics::SCANCODE_UP))
+    else if (pos_x > CANVAS_WIDTH)
     {
-
-        height += 0.01f * graphics::getDeltaTime();
-        if (height > 3.0f)
-            height = 3.0f;
+        pos_x = 0; // Αν βγει δεξιά, μετακινείται στην αριστερή πλευρά
     }
-
-    //GameObject::update(dt);
 }
 
-void Player::init() {
-    
-   // m_pos_x = 5.0f;
-    //m_pos_y = 5.0f;
-
-    // Κανονικό sprite του Player
-    //m_brush_player.fill_opacity = 1.0f;
-    //outline_opacity = 0.0f;
-   // m_brush_player.texture = m_state->getFullAssetPath("t2.png.png");
-
-    // Αρχικοποίηση για το glow brush
-    //m_brush_glow = m_brush_player;  // Ξεκινάμε με τις ρυθμίσεις του brush του παίκτη
-    //m_brush_glow.fill_opacity = 0.5f;  // Ρύθμιση διαφάνειας για το glow
-    //m_brush_glow.outline_opacity = 0.0f;
-
-    // Τοποθέτηση του παίκτη στο κέντρο της οθόνης
-   // float w = m_state->getCanvasWidth();
-   // float h = m_state->getCanvasHeight();
-    //m_pos_x = w / 0.45f;  // Κέντρο X
-   // m_pos_y = h / 0.45f;  // Κέντρο Y
-
+void Player::init() 
+{
 }
 
-void Player::draw() 
+void Player::draw()
 {
 
-    // Σχεδιάζουμε το Glow Effect γύρω από το sprite με μεγαλύτερο μέγεθος
-    //graphics::drawRect(m_pos_x, m_pos_y, 10.0f, 10.0f, m_brush_glow);  // Μεγαλύτερο μέγεθος για το glow
-
-   // graphics::drawRect(m_pos_x, m_pos_y, 6.0f, 6.0f, m_brush_player);
-    
-    float glow = 0.5f + 0.5f * sinf(graphics::getGlobalTime() / 10);
-    
     graphics::Brush br;
     br.outline_opacity = 0.0f;
 
-    graphics::setOrientation(-90.f);
+    
     graphics::setScale(height, height);
-    br.fill_opacity = 1.0f;
-    br.texture = std::string(ASSET_PATH) + "t2.png.png";
-    graphics::drawRect(pos_x, pos_y, 100, 100, br);
+    br.fill_opacity = 2.5f;
+    br.texture = std::string(ASSET_PATH) + "p.png"; // emfanish tou xarakthra
+    graphics::drawRect(pos_x, pos_y, 200, 120, br);
 
     graphics::resetPose();
 
-    br.texture = "";
-    br.fill_color[0] = 1.0f;
-    br.fill_color[1] = 0.5f + glow * 0.5f;
-    br.fill_color[2] = 0.0f;
-    br.fill_secondary_color[0] = 0.3f;
-    br.fill_secondary_color[1] = 0.1f;
-    br.fill_secondary_color[2] = 0.0f;
-    br.fill_opacity = 1.0f;
-    br.fill_secondary_opacity = 0.0f;
-    br.gradient = true;
-    graphics::setScale(height, height);
-    graphics::drawDisk(pos_x - 50 * height, pos_y, 20, br);
-    graphics::resetPose();
-
-
-    if (game.getDebugModel())
+    if (game.getDebugModel()) // emfanish tou hitbox an thesw true to DebugModel
     {
         br.outline_opacity = 1.0f;
         br.texture = "";
@@ -117,13 +69,9 @@ void Player::draw()
         graphics::drawDisk(hull.cx, hull.cy, hull.radius, br);
     }
 
-
-
 }
 
-
-
-Disk Player::getCollisionHull() const
+Disk Player::getCollisionHull() const // dhmioyrgia tou hitbox
 {
     Disk disk;
     disk.cx = pos_x;
