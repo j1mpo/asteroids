@@ -1,51 +1,35 @@
 #pragma once
-
+#include <vector>
 #include "player.h"
 #include "Enemy.h"
 
 class Game
 {
-//void spawnMeteorite();
-
-	typedef enum { STATUS_START, STATUS_PLAYING } status_t;
+	std::vector<Enemy*> enemies; //burgers
+	typedef enum { STATUS_START, STATUS_PLAYING, STATUS_END } status_t; //status othonis
 	Player* player = nullptr;
 	bool player_initialized = false;
 	bool debug_mode = false;
-	Enemy* meteorite = nullptr;
-	void spawnMeteorite();
-	void checkMeterorite();
-	bool checkCollision();
+	Enemy* burger = nullptr;
+	void spawnBurger();
+	void checkBurger();
+	bool checkCollision(Player* player, Enemy* enemy);
 	status_t status = STATUS_START;
 
 	unsigned int window_width = WINDOW_WIDTH,
-				window_height = WINDOW_HEIGHT;
+		window_height = WINDOW_HEIGHT;
 
 
 
 
 	void updateStartScreen();
 	void updateLevelScreen();
+	void updateEndScreen();
 	void drawStartScreen();
 	void drawLevelScreen();
+	void drawEndScreen();
 
-	
-	//bool Game::checkCollision()
-	//{
 
-		//return false;
-	//}
-
-	//void Game::update()
-	//{
-
-		//if (!player_initialized && graphics::getGlobalTime() > 1000)
-		//{
-		//	player = new Player(*this);
-	//		player_initialized = true;
-
-		//}
-
-	//}
 
 public:
 	void setDebugModel(bool d) { debug_mode = d; }
@@ -58,7 +42,7 @@ public:
 	float window2canvasX(float x);
 	float window2canvasY(float y);
 	void setWindowDimensions(unsigned int w, unsigned int h) { window_width = w; window_height = h; }
-
+	void restartGame();
 	Game();
 	~Game();
 
