@@ -12,6 +12,7 @@ class Enemy : public GameObject, public Collidable
     graphics::Brush brush;
     bool active = true;
 
+
 public:
     void update() override;
     void draw() override;
@@ -20,4 +21,5 @@ public:
     Enemy(const class Game& mygame);
     ~Enemy();
     Disk getCollisionHull()const override;
+    float getPosY() const;
 };
