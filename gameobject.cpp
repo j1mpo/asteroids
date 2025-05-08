@@ -3,7 +3,7 @@
 
 
 
-GameObject::GameObject(const Game & mygame)
+GameObject::GameObject(const Game& mygame)
 	:game(mygame)
 {
 
